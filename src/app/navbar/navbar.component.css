@@ -1,48 +1,37 @@
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #004e89;
-    color: #fff;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    z-index: 9999;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #004e89;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-wrap: wrap;
+}
 
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 5px;
+  white-space: nowrap;
+}
 
-  
+.navbar a:hover {
+  background-color: #fff;
+  color: #004e89;
+  cursor: pointer;
+}
+
+/* Support for smaller screens */
+@media (max-width: 768px) {
   .navbar a {
-    color: #fff;
-    padding: 10px;
-    text-decoration: none;
+    padding: 10px 5px;
+    font-size: 16px;
+    margin: 5px;
   }
-  
-  .navbar a:hover {
-    background-color: #fff;
-    color: #004e89;
-    cursor: pointer;
-  }
-  
-  .navbar-left {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-left a {
-    margin-left: 5px;
-  }
-
-  .navbar-right {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-right a {
-    margin-left: 5px;
-  }
-
-  .navbar-right a:last-child {
-    margin-right: 10px;
-  }
+}
