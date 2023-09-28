@@ -1,0 +1,44 @@
+<section class="popup">
+  <!-- When not submitted, show div content, else show successMessage component -->
+  <aside class="popup-content">
+    <article *ngIf="!submitted">
+      <!-- When "Close" button is selected, closePopup in popupControlService is triggered -->
+      <button class="close-button" 
+              (mouseenter)="changeIcon(true)" 
+              (mouseleave)="changeIcon(false)"
+              (click)="popupControlService.closePopup()">
+        <i *ngIf="!isHovered" class="fa-regular fa-circle-xmark"></i>
+        <i *ngIf="isHovered" class="fa-solid fa-circle-xmark"></i>
+      </button>
+
+      <h2>Contact</h2>
+
+      <!-- When fields are empty, show main error message -->
+      <div *ngIf="formErrors" class="error-message">
+        <i class="fa-solid fa-circle-exclamation"></i>&nbsp;All fields are required
+      </div>
+
+      <form #contactForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Name&nbsp;<span class="colored">*</span></label>
+          <input type="text" id="name" name="name" [(ngModel)]="formData.name" required #nameField="ngModel">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address&nbsp;<span class="colored">*</span></label>
+          <input type="email" id="email" name="email" [(ngModel)]="formData.email" required #emailField="ngModel">
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message&nbsp;<span class="colored">*</span></label>
+          <textarea id="message" name="message" [(ngModel)]="formData.message" required #messageField="ngModel"></textarea>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </article>
+
+    <!-- When successMessage is triggered, form-success Component is presented -->
+    <app-form-success *ngIf="submitted"></app-form-success>
+  </aside>
+</section>

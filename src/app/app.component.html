@@ -1,0 +1,22 @@
+<!-- When showLoading = false, show Loading Component -->
+<app-loading *ngIf="showLoading"></app-loading>
+
+<!-- When showLoading = false, show all other Components -->
+<main *ngIf="!showLoading">
+
+  <app-navbar></app-navbar>
+  
+  <!-- When showPopup = true, popup component is presented -->
+  <app-popup *ngIf="showPopup"></app-popup>
+        
+  <app-header></app-header>
+
+  <app-primary-badges></app-primary-badges>
+
+  <app-projects></app-projects>
+
+  <app-secondary-badges></app-secondary-badges>
+    
+  <app-footer></app-footer>
+
+</main>
