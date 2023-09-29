@@ -4,6 +4,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupControlService } from './popup-control.service';
+import { SlideOutService } from './slide-out.service';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -15,6 +16,7 @@ import { PrimaryBadgesComponent } from './primary-badges/primary-badges.componen
 import { FormSuccessComponent } from './form-success/form-success.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { SecondaryBadgesComponent } from './secondary-badges/secondary-badges.component';
+import { SlideOutPanelComponent } from './slide-out-panel/slide-out-panel.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { SecondaryBadgesComponent } from './secondary-badges/secondary-badges.co
     FormSuccessComponent,
     ProjectsComponent,
     SecondaryBadgesComponent,
+    SlideOutPanelComponent,
     ],
   imports: [
     BrowserModule,
@@ -36,7 +39,10 @@ import { SecondaryBadgesComponent } from './secondary-badges/secondary-badges.co
     ReactiveFormsModule,
     HttpClientModule,
     ],
-  providers: [PopupControlService],
+  providers: [
+    PopupControlService,
+    SlideOutService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

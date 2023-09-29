@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupControlService } from './popup-control.service';
+import { SlideOutService } from './slide-out.service';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,14 @@ export class AppComponent implements OnInit {
   // When navigating to webpage, showPopup = false
   showPopup = false;
 
-  // popupControlService is accessible outside the class
-  constructor(public popupControlService: PopupControlService) {
+  // When navigating to webpage, showSlideOut = false
+  showSlideOut = false;
+
+  // Inject the popupControlService and SlideOutService
+  constructor(
+    public popupControlService: PopupControlService,
+    public SlideOutService: SlideOutService
+  ) {
     console.log('Loading status:', this.showLoading);
   }
 
@@ -28,12 +35,17 @@ export class AppComponent implements OnInit {
       console.log('Loading status:', this.showLoading);
     }, 2000);
 
-  // Subscribe to showPopup$
-  this.popupControlService.showPopup$.subscribe((showPopup) => {
-    console.log('Popup status:', showPopup);
-    this.showPopup = showPopup;
-  });
-    
+    // Subscribe to showPopup$
+    this.popupControlService.showPopup$.subscribe((showPopup) => {
+      console.log('Popup status:', showPopup);
+      this.showPopup = showPopup;
+    });
+
+    // Subscribe to showSlideOut$
+    this.SlideOutService.showSlideOut$.subscribe((showSlideOut) => {
+      console.log('Slide out status:', showSlideOut);
+      this.showSlideOut = showSlideOut;
+    });
   }
-  
+
 }
