@@ -6,7 +6,7 @@
   background-color: #004e89;
   color: #fff;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   z-index: 9999;
   flex-wrap: wrap;

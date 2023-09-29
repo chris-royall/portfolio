@@ -5,9 +5,12 @@
 <main *ngIf="!showLoading">
 
   <app-navbar></app-navbar>
-  
+
   <!-- When showPopup = true, popup component is presented -->
   <app-popup *ngIf="showPopup"></app-popup>
+  
+  <!-- When showSlideOut = true, slide out component is presented -->
+  <app-slide-out-panel *ngIf="showSlideOut"></app-slide-out-panel>
         
   <app-header></app-header>
 
