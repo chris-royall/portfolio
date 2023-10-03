@@ -18,6 +18,10 @@
     box-sizing: border-box;
 }
 
+.inner-container p {
+    margin: 10px;
+}
+
 .button-container {
     display: flex;
     flex-direction: column;
@@ -32,7 +36,7 @@
     border-radius: 5px;
     cursor: pointer;
     flex-grow: 1;
-    margin: 0 5px;
+    margin: 7px;
     margin-bottom: 5px;
     width: 200px;
 }
