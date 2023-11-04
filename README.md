@@ -20,3 +20,33 @@
 <p>Angular (HTML, CSS, TypeScript), GitHub, AWS (Amplify, Route 53, API Gateway, Lambda, Simple Email Service)</p>
 
 <img src="/src/assets/images/portfolio-infrastructure.png" alt="porfolio-infrastructure">
+
+
+## Contact Form API
+
+### URL
+`/ContactForm`
+
+### Method
+`POST`
+
+### Body
+```
+{
+  "name":"John Doe",
+  "email":"john.doe@email.com",
+  "message":"This is a message."
+}
+```
+
+### Success Response
+`statusCode: 200`
+```
+{ message: "Email sent successfully" }
+```
+
+### Error Response
+`statusCode: 500`
+```
+{ message: "Error sending email" }
+```
