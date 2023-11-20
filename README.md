@@ -14,6 +14,7 @@
 <li>The API triggers the Lambda function which sends the content to the verified email address in AWS Simple Email Service.</li>
 </ul></p>
 
+<a href="https://www.chrisroyall.com" target="_blank">Public Link</a>
 
 ## Infrastructure
 
