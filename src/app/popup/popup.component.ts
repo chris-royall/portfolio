@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PopupControlService } from '../popup-control.service';
 import { HttpClient } from '@angular/common/http';
+import { LoggingService } from '../logging.service';
 
 @Component({
   selector: 'app-popup',
@@ -8,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./popup.component.css']
 })
 export class PopupComponent {
-  constructor(public popupControlService: PopupControlService, private http: HttpClient) {}
+  constructor(public popupControlService: PopupControlService, private http: HttpClient, public LoggingService: LoggingService) {}
 
   formData: any = {
     name: '',
@@ -24,10 +25,8 @@ export class PopupComponent {
 
 
   onSubmit() {
-    console.log('Attempting to Submit');
   
     if (!this.isFormValid()) {
-      console.log('Field is empty');
       this.formErrors = true;
       return;
     }
@@ -38,21 +37,17 @@ export class PopupComponent {
       email: this.formData.email,
       message: this.formData.message
     });
-    const jsonData = JSON.stringify(body);
-    console.log(jsonData);
     
     // API POST Request
     this.http.post('https://9h3992v7k1.execute-api.eu-west-2.amazonaws.com/default/ContactForm', body)
       .subscribe(
         (response) => {
-          console.log('API Response:', response);
           this.submitted = true;
           this.formErrors = false;
           this.successMessage = true;
           this.popupControlService.closePopupAfterDelay(2000);
         },
         (error) => {
-          console.error('API Error:', error);
         }
       );
   
@@ -66,8 +61,11 @@ export class PopupComponent {
   }
 
   changeIcon(hovering: boolean) {
-    console.log('Hovering Changed');
     this.isHovered = hovering;
+  }
+
+  onButtonClick(option: string): void {
+    this.LoggingService.logButtonClick(option);
   }
   
 }

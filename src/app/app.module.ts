@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupControlService } from './popup-control.service';
 import { SlideOutService } from './slide-out.service';
+import { LoggingService } from './logging.service';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -42,6 +43,7 @@ import { SlideOutPanelComponent } from './slide-out-panel/slide-out-panel.compon
   providers: [
     PopupControlService,
     SlideOutService,
+    LoggingService
   ],
   bootstrap: [AppComponent]
 })
