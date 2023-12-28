@@ -1,11 +1,28 @@
 <div class="container">
 
     <div class="inner-container">
-        <h2>Portfolio</h2>
+        <h2>Angular Web Application</h2>
         <p>Angular (HTML, CSS, TypeScript), GitHub, AWS Amplify</p>
         <div class="button-container">
-            <a (click)="onButtonClick('Project: Angular')" href="https://github.com/chris-royall/portfolio" target="blank"><button>GitHub Repository</button></a>
+            <a (click)="LoggingService.logButtonClick('Project: Angular Web Application')" href="https://github.com/chris-royall/portfolio" target="blank"><button>GitHub Repository</button></a>
         </div>
     </div>
+
+    <div class="inner-container">
+        <h2>Contact Form Email</h2>
+        <p>API Gateway, Lambda, CloudWatch, Simple Email Service</p>
+        <div class="button-container">
+            <a (click)="LoggingService.logButtonClick('Project: Contact Form Email')" href="https://github.com/chris-royall/portfolio#contact-form-email" target="blank"><button>GitHub Repository</button></a>
+        </div>
+    </div>
+
+    <div class="inner-container">
+        <h2>Link Selection Logs</h2>
+        <p>API Gateway, Lambda, CloudWatch</p>
+        <div class="button-container">
+            <a (click)="LoggingService.logButtonClick('Project: Link Selection Logs')" href="https://github.com/chris-royall/portfolio#link-selection-logs" target="blank"><button>GitHub Repository</button></a>
+        </div>
+    </div>
+
 
 </div>
