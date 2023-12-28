@@ -27,7 +27,7 @@
 
 
 
-## Contact Form
+## Contact Form Email
 
 <p>Once Contact Form content is captured in FrontEnd:
 <ul>
@@ -96,7 +96,7 @@ console.log("Lambda completed");
 ```
 
 
-## Link Selection
+## Link Selection Logs
 
 
 ### Link Selection API
