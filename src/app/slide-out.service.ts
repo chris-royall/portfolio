@@ -11,7 +11,6 @@ export class SlideOutService {
 
   // When showPopup is triggered, showSlideOutSubject = true
   showSlideOut() {
-    console.log('showSlideOut is toggled'); 
     this.showSlideOutSubject.next(!this.showSlideOutSubject.value);
   }
 }

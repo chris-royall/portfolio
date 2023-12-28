@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoggingService } from '../logging.service';
 
 @Component({
   selector: 'app-primary-badges',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./primary-badges.component.css']
 })
 export class PrimaryBadgesComponent {
+
+  constructor(
+    public LoggingService: LoggingService
+  ) {}
+
+  onButtonClick(option: string): void {
+    this.LoggingService.logButtonClick(option);
+  }
 
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PopupControlService } from '../popup-control.service';
 import { SlideOutService } from '../slide-out.service';
+import { LoggingService } from '../logging.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,6 +9,14 @@ import { SlideOutService } from '../slide-out.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(public PopupControlService: PopupControlService, public SlideOutService: SlideOutService) {}
+  constructor(
+    public PopupControlService: PopupControlService,
+    public SlideOutService: SlideOutService,
+    public LoggingService: LoggingService
+  ) {}
+
+  onButtonClick(option: string): void {
+    this.LoggingService.logButtonClick(option);
+  }
 
 }

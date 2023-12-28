@@ -14,22 +14,18 @@ export class PopupControlService {
 
   // When showPopup is triggered, showPopupSubject = true
   showPopup() {
-    console.log('showPopup'); 
     this.showPopupSubject.next(true);
   }
 
   // Close Popup after delay
   closePopupAfterDelay(delay: number) {
-    console.log('closePopupAfterDelay'); 
     timer(delay).subscribe(() => {
-      console.log('Delay Reached'); 
       this.closePopup();
     });
   }
 
   // When close button is clicked, showPopupSubject = false
   closePopup() {
-    console.log('closePopup');
     this.showPopupSubject.next(false);
   }
 

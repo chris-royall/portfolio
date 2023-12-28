@@ -25,25 +25,21 @@ export class AppComponent implements OnInit {
     public popupControlService: PopupControlService,
     public SlideOutService: SlideOutService
   ) {
-    console.log('Loading status:', this.showLoading);
   }
 
   // After 2 seconds, showLoading = false
   ngOnInit() {
     setTimeout(() => {
       this.showLoading = false;
-      console.log('Loading status:', this.showLoading);
     }, 2000);
 
     // Subscribe to showPopup$
     this.popupControlService.showPopup$.subscribe((showPopup) => {
-      console.log('Popup status:', showPopup);
       this.showPopup = showPopup;
     });
 
     // Subscribe to showSlideOut$
     this.SlideOutService.showSlideOut$.subscribe((showSlideOut) => {
-      console.log('Slide out status:', showSlideOut);
       this.showSlideOut = showSlideOut;
     });
   }

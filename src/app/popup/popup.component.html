@@ -6,6 +6,7 @@
       <button class="close-button" 
               (mouseenter)="changeIcon(true)" 
               (mouseleave)="changeIcon(false)"
+              (click)="onButtonClick('Contact Form: Close')"
               (click)="popupControlService.closePopup()">
         <i *ngIf="!isHovered" class="fa-regular fa-circle-xmark"></i>
         <i *ngIf="isHovered" class="fa-solid fa-circle-xmark"></i>
