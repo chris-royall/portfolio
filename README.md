@@ -13,7 +13,12 @@
 
 <p>This Project has been built using HTML, CSS and TypeScript using the Angular framework.</p>
 
-<p>Within this application, I have configured a contact form containing three fields with validation. The user must enter content to all fields to submit the form. If any fields are empty, the form fails to send and the user is presented with a validation warning message.</p>
+<p>Within this application, I have configured a contact form containing three fields with validation. The user must enter content to all fields to submit the form. If any fields are empty, the form fails to send and the user is presented with a validation warning message.</br>
+Once the form has been submitted, an API is called using <code>POST</code> method which sends the form data to a Lambda function. The function will send an email with the form data via Simple Email Service, followed by recording the payload data to the associated CloudWatch Log Group.</p>
+
+<p>Further logging is recorded upon the selection of a link within the application. When a user selects a link, an API is called using <code>POST</code> method which sends the button reference to a Lambda function. The function will record a new Log Stream within the CloudWatch Log Group and record the payload data.</br>
+Log Stream prefix: <code>LinkSelection-${currentDate}</code></br>
+If a Log Stream already exists, the log will get recorded in that Log Stream.</p>
 
 <a href="https://www.chrisroyall.com" target="_blank">Public Link</a>
 
@@ -106,7 +111,7 @@ console.log("Lambda completed");
 <li>Value is sent to an API configured in AWS API Gateway.</li>
 <li>The API triggers a Lambda function.</li>
 <li>If a Log Stream exists for current date, then the logs are recorded in the existing Log Stream.</li>
-<li>Else, a new Log Stream is created with current with format `LinkSelection-${currentDate}`, then the logs are recorded in the new Log Stream.</li>
+<li>Else, a new Log Stream is created with current with format <code>LinkSelection-${currentDate}</code>, then the logs are recorded in the new Log Stream.</li>
 </ul>
 
 URL</br>
