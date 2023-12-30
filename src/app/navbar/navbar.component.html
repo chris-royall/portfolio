@@ -1,9 +1,9 @@
 <nav class="navbar">
 
     <!-- When "Contact" button is selected, log button click and show popup -->
-    <a (click)="onButtonClick('Contact Form: Open')" (click)="PopupControlService.showPopup()"><i class="fa-solid fa-square-envelope"></i>&nbsp;Contact</a>
+    <a (click)="LoggingService.logButtonClick('Contact Form: Open')" (click)="PopupControlService.showPopup()"><i class="fa-solid fa-square-envelope"></i>&nbsp;Contact</a>
     
     <!-- When Hamburger button is selected, log button click and show slide-out panel -->
-    <a (click)="onButtonClick('Slide Out Panel')" (click)="SlideOutService.showSlideOut()"><i class="fa-solid fa-bars"></i></a>
+    <a (click)="LoggingService.logButtonClick('Slide Out Panel')" (click)="SlideOutService.showSlideOut()"><i class="fa-solid fa-bars"></i></a>
     
 </nav>

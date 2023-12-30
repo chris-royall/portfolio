@@ -12,8 +12,4 @@ export class ProjectsComponent {
     public LoggingService: LoggingService
   ) {}
 
-  onButtonClick(option: string): void {
-    this.LoggingService.logButtonClick(option);
-  }
-
 }

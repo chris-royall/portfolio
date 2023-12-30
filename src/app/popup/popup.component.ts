@@ -63,9 +63,5 @@ export class PopupComponent {
   changeIcon(hovering: boolean) {
     this.isHovered = hovering;
   }
-
-  onButtonClick(option: string): void {
-    this.LoggingService.logButtonClick(option);
-  }
   
 }

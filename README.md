@@ -1,28 +1,28 @@
 # Portfolio
 - [Overview](#overview)
 - [Infrastructure](#infrastructure)
-- [Contact Form API](#contact-form-api)
-- [Logging](#logging)
-  - [Link Selection](#link-selection)
-  - [Contact Form](#contact-form)
+- [Contact Form Email](#contact-form-email)
+  - [Contact Form API](#contact-form-api)
+  - [Contact Form Logging](#contact-form-logging)
+- [Link Selection Logs](#link-selection-logs)
+  - [Link Selection API](#link-selection-api)
+  - [Link Selection Logging](#link-selection-logging)
 
 
 ## Overview
 
 <p>This Project has been built using HTML, CSS and TypeScript using the Angular framework.</p>
 
-<p>Within this application, I have configured a contact form containing three fields with validation. The user must enter content to all fields to submit the form. If any fields are empty, the form fails to send and the user is presented with a validation warning message.</p>
+<p>Within this application, I have configured a contact form containing three fields with validation. The user must enter content to all fields to submit the form. If any fields are empty, the form fails to send and the user is presented with a validation warning message.</br>
+Once the form has been submitted, an API is called using <code>POST</code> method which sends the form data to a Lambda function. The function will send an email with the form data via Simple Email Service, followed by recording the payload data to the associated CloudWatch Log Group.</p>
 
-<p>Once the form has been submitted successfully, a success message is presented to the user along with the below events:
-<ul>
-<li>Contact Form content is sent from FrontEnd in JSON format.</li>
-<li>Content is sent to the API configured in AWS API Gateway.</li>
-<li>The API triggers the Lambda function which sends the content to the verified email address in AWS Simple Email Service.</li>
-</ul></p>
-
-<p>Logging is recorded from the into CloudWatch upon the triggering of events within the Lambda function.</p>
+<p>Further logging is recorded upon the selection of a link within the application. When a user selects a link, an API is called using <code>POST</code> method which sends the button reference to a Lambda function. The function will record a new Log Stream within the CloudWatch Log Group and record the payload data.</br>
+Log Stream prefix: <code>LinkSelection-${currentDate}</code></br>
+If a Log Stream already exists, the log will get recorded in that Log Stream.</p>
 
 <a href="https://www.chrisroyall.com" target="_blank">Public Link</a>
+
+
 
 ## Infrastructure
 
@@ -31,7 +31,18 @@
 <img src="/src/assets/images/portfolio-infrastructure.png" alt="porfolio-infrastructure">
 
 
-## Contact Form API
+
+## Contact Form Email
+
+<p>Once Contact Form content is captured in FrontEnd:
+<ul>
+<li>Content is sent to an API configured in AWS API Gateway.</li>
+<li>The API triggers a Lambda function which sends the content to the verified email address in AWS Simple Email Service.</li>
+<li>Logs are recorded in CloudWatch containing the payload data.</li>
+</ul></p>
+
+
+### Contact Form API
 
 URL</br>
 `/ContactForm`
@@ -42,9 +53,9 @@ Method</br>
 Body</br>
 ```
 {
-  "name":"John Doe",
-  "email":"john.doe@email.com",
-  "message":"This is a message."
+  "name": "John Doe",
+  "email": "john.doe@email.com",
+  "message": "This is a message."
 }
 ```
 
@@ -60,23 +71,92 @@ Error Response</br>
 { message: "Error sending email" }
 ```
 
+### Contact Form Logging
 
-## Logging
-
-<p>When the Contact Form is submitted with content,</br>
-Then logs are recorded in AWS CloudWatch</p>
+Log Group</br>
+`/ContactForm`
 
 Data received with timestamp</br>
 ```
 const { name, email, message } = JSON.parse(event.body);
 console.log(new Date().toISOString(), "Event received");
-console.log("Name:", name, "Email:", email, "Message:", message);
+console.log('Event:', JSON.stringify(event, null, 2));
 ```
 
 Send email via SES</br>
 ```
 console.log("Sending email");
 await ses.sendEmail(params).promise();
+```
+
+Catch error</br>
+```
+catch (error) {
+    console.error("Error in Lambda:", error);
+```
+
+Lambda completed</br>
+```
+console.log("Lambda completed");
+```
+
+
+## Link Selection Logs
+
+
+### Link Selection API
+
+<ul>
+<li>Selected Button value is captured in FrontEnd.</li>
+<li>Value is sent to an API configured in AWS API Gateway.</li>
+<li>The API triggers a Lambda function.</li>
+<li>If a Log Stream exists for current date, then the logs are recorded in the existing Log Stream.</li>
+<li>Else, a new Log Stream is created with current with format <code>LinkSelection-${currentDate}</code>, then the logs are recorded in the new Log Stream.</li>
+</ul>
+
+URL</br>
+`/LinkSelection`
+
+Method</br>
+`POST`
+
+Body</br>
+```
+{
+  buttonClicked: "Sample Button"
+}
+```
+
+Success Response</br>
+`statusCode: 200`
+```
+{ message: "Log recorded" }
+```
+
+Error Response</br>
+`statusCode: 500`
+```
+{ message: "Internal Server Error" }
+```
+
+
+### Link Selection Logging
+
+Log Group</br>
+`/LinkSelection`
+
+Data logged with timestamp</br>
+```
+const logParams = {
+  logGroupName,
+  logStreamName,
+  logEvents: [
+    {
+      timestamp: new Date().getTime(),
+      message: `Link Selected: ${buttonClicked}`
+    },
+  ],
+};
 ```
 
 Catch error</br>
