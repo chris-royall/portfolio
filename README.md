@@ -1,32 +1,21 @@
 # Portfolio
+
 - [Overview](#overview)
-- [Infrastructure](#infrastructure)
 - [Contact Form Email](#contact-form-email)
   - [Contact Form API](#contact-form-api)
+- [Logging](#logging)
   - [Contact Form Logging](#contact-form-logging)
-- [Link Selection Logs](#link-selection-logs)
   - [Link Selection API](#link-selection-api)
   - [Link Selection Logging](#link-selection-logging)
+  - [Kinesis Delivery Streams](#kinesis-delivery-streams)
+
 
 
 ## Overview
 
-<p>This Project has been built using HTML, CSS and TypeScript using the Angular framework.</p>
-
-<p>Within this application, I have configured a contact form containing three fields with validation. The user must enter content to all fields to submit the form. If any fields are empty, the form fails to send and the user is presented with a validation warning message.</br>
-Once the form has been submitted, an API is called using <code>POST</code> method which sends the form data to a Lambda function. The function will send an email with the form data via Simple Email Service, followed by recording the payload data to the associated CloudWatch Log Group.</p>
-
-<p>Further logging is recorded upon the selection of a link within the application. When a user selects a link, an API is called using <code>POST</code> method which sends the button reference to a Lambda function. The function will record a new Log Stream within the CloudWatch Log Group and record the payload data.</br>
-Log Stream prefix: <code>LinkSelection-${currentDate}</code></br>
-If a Log Stream already exists, the log will get recorded in that Log Stream.</p>
+<p>This Project has been built using HTML, CSS and TypeScript using the Angular framework, along with implementation of AWS services (Amplify, Route 53, API Gateway, Lambda, Simple Email Service, CloudWatch, Kinesis, S3).</p>
 
 <a href="https://www.chrisroyall.com" target="_blank">Public Link</a>
-
-
-
-## Infrastructure
-
-<p>Angular (HTML, CSS, TypeScript), GitHub, AWS (Amplify, Route 53, API Gateway, Lambda, Simple Email Service, CloudWatch)</p>
 
 <img src="/src/assets/images/portfolio-infrastructure.png" alt="porfolio-infrastructure">
 
@@ -34,11 +23,13 @@ If a Log Stream already exists, the log will get recorded in that Log Stream.</p
 
 ## Contact Form Email
 
-<p>Once Contact Form content is captured in FrontEnd:
+<p>Within this application, I have configured a contact form containing three fields with validation. The user must enter content to all fields to submit the form. If any fields are empty, the form fails to send and the user is presented with a validation warning message.</br>
+
+<p>Once the form has been submitted:
 <ul>
-<li>Content is sent to an API configured in AWS API Gateway.</li>
+<li>Content is sent to an API configured in AWS API Gateway using <code>POST</code> method.</li>
 <li>The API triggers a Lambda function which sends the content to the verified email address in AWS Simple Email Service.</li>
-<li>Logs are recorded in CloudWatch containing the payload data.</li>
+<li>[Logging](#logging) is recorded containing the payload data into the associate CloudWatch Log Group.</li>
 </ul></p>
 
 
@@ -71,6 +62,25 @@ Error Response</br>
 { message: "Error sending email" }
 ```
 
+
+
+## Logging
+
+<p>Logging recorded:
+<ul>
+<li>The submission of a Contact Form from the [Contact Form API](#contact-form-api).</li>
+<li>Selecting a link within the application.
+  <ul>
+  <li>Selected Button value is captured in FrontEnd.</li>
+  <li>Value is sent to an API configured in AWS API Gateway.</li>
+  <li>The API triggers a Lambda function.</li>
+  <li>If a Log Stream exists for current date, then the logs are recorded in the existing Log Stream.</li>
+  <li>Else, a new Log Stream is created with current with format <code>LinkSelection-${currentDate}</code>, then the logs are recorded in the new Log Stream.</li>
+</ul></p>
+
+<p>The CloudWatch Log Groups are configured with a retention policy of 30 days. To ensure data is stored for longer, a subscription filter is used to stream data to an S3 Bucket using Kinesis Data Firehose. The S3 Bucket is configured with S3 Glacier Deep Archive Storage Class since access will be infrequent, and cost and be reduced. Logs are delete after 365 days.</p>
+
+
 ### Contact Form Logging
 
 Log Group</br>
@@ -101,18 +111,7 @@ console.log("Lambda completed");
 ```
 
 
-## Link Selection Logs
-
-
 ### Link Selection API
-
-<ul>
-<li>Selected Button value is captured in FrontEnd.</li>
-<li>Value is sent to an API configured in AWS API Gateway.</li>
-<li>The API triggers a Lambda function.</li>
-<li>If a Log Stream exists for current date, then the logs are recorded in the existing Log Stream.</li>
-<li>Else, a new Log Stream is created with current with format <code>LinkSelection-${currentDate}</code>, then the logs are recorded in the new Log Stream.</li>
-</ul>
 
 URL</br>
 `/LinkSelection`
@@ -122,9 +121,7 @@ Method</br>
 
 Body</br>
 ```
-{
-  buttonClicked: "Sample Button"
-}
+{ buttonClicked: "Sample Button" }
 ```
 
 Success Response</br>
@@ -168,4 +165,25 @@ catch (error) {
 Lambda completed</br>
 ```
 console.log("Lambda completed");
+```
+
+### Kinesis Delivery Streams
+
+```
+"LogGroup": "/aws/lambda/ContactForm"
+"Subscription": "contactform-applicationlogs-exporttos3"
+"DeliveryStream": "contactform-applicationlogs"
+"Bucket": "contactform-applicationlogs"
+  "Expiration": { "Days": 365" }
+  "Transitions": [{ "Days": 0, "StorageClass": "DEEP_ARCHIVE" }]
+```
+
+Link Selection</br>
+```
+"LogGroup": "/aws/lambda/LinkSelection"
+"Subcription": "linkselection-applicationlogs-exporttos3"
+"DeliveryStream": "linkselection-applicationlogs"
+"Bucket": "linkselection-applicationlogs"
+  "Expiration": { "Days": 365" }
+  "Transitions": [{ "Days": 0, "StorageClass": "DEEP_ARCHIVE" }]
 ```
