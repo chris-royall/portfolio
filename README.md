@@ -29,7 +29,7 @@
 <ul>
 <li>Content is sent to an API configured in AWS API Gateway using <code>POST</code> method.</li>
 <li>The API triggers a Lambda function which sends the content to the verified email address in AWS Simple Email Service.</li>
-<li>[Logging](#logging) is recorded containing the payload data into the associate CloudWatch Log Group.</li>
+<li><a href="https://github.com/chris-royall/portfolio#logging">Logging</a> is recorded containing the payload data into the associate CloudWatch Log Group.</li>
 </ul></p>
 
 
@@ -68,7 +68,7 @@ Error Response</br>
 
 <p>Logging recorded:
 <ul>
-<li>The submission of a Contact Form from the [Contact Form API](#contact-form-api).</li>
+<li>The submission of a Contact Form from the <a href="https://github.com/chris-royall/portfolio#contact-form-email"> Contact Form API</a>.</li>
 <li>Selecting a link within the application.
   <ul>
   <li>Selected Button value is captured in FrontEnd.</li>
